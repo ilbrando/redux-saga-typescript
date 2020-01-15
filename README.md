@@ -116,11 +116,13 @@ const personDto: YieldReturn<typeof api.getPerson> = yield call(api.getPerson);
 
 ## But I can still make errors
 
-Yes even though it is much easer to spot errors, it is still possible to specify a wrong type. I can still specify `IPersonDto`, but if I (or somebody else) review my code, maybe this mistake will be spotted.
+Yes even though it is much more easy to spot errors, it is still possible to specify a wrong type. I can still specify `IPersonDto`, but if I (or somebody else) review my code, maybe this mistake will be spotted.
 
 **ESLINT to the rescue**
 
-I have written an ESLINT rule that can verify that I use the right type when I `yield call` in my saga. It finds the first argument which is the function to call, and verifies that I have defined a the same return type.
+I have written an ESLINT rule that can verify that I use the right type when I `yield call` in my saga. It finds the first argument which is the function to call, and verifies that I have defined its return type as the type of my variable.
+
+It looks like this in the VS Code editor.
 
 ![eslint-rule](assets/eslint-rule.png)
 

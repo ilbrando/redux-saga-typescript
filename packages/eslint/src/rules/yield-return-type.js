@@ -16,7 +16,6 @@ module.exports = {
     if (context.options.length >= 1) {
       methods = context.options[0];
     }
-    console.log("eslint-plugin-yield-return-type methods: ", methods);
     const sourceCode = context.getSourceCode();
     return {
       VariableDeclarator: node => {

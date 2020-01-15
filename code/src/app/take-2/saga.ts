@@ -3,7 +3,7 @@ import * as api from "../api";
 import { actions, ActionTypes } from "../store";
 import { YieldReturn } from "./saga-utils";
 
-function* getPerson() {
+function* getPerson()  {
   const personDto: YieldReturn<typeof api.getPerson> = yield call(
     api.getPerson
   );

@@ -17,6 +17,10 @@ module.exports = {
       methods = context.options[0];
     }
     console.log("eslint-plugin-yield-return-type methods: ", methods);
-    return {};
+    return {
+      "FunctionDeclaration": node => {
+        console.log(node);
+      }
+    };
   }
 }

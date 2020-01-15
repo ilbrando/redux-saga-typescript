@@ -1,0 +1,8 @@
+{
+  "name": "eslint-redux-saga-typescript",
+  "version": "1.0.0",
+  "description": "Redux Saga rule for typesafe API calls in sagas.",
+  "main": "src/index.js",
+  "author": "ilbrando",
+  "license": "MIT"
+}

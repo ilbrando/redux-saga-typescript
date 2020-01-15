@@ -57,7 +57,7 @@ function* getPerson() {
 }
 ```
 
-The difference is that no I'm telling TypeScript that `personDto` is of type `IPersonDto`. That gives me intellisense and as long as the return value of `api.getPerson` doesn't change - and I got it right in the first place - everything is fine.
+The difference is that now I'm telling TypeScript that `personDto` is of type `IPersonDto`. That gives me intellisense and as long as the return value of `api.getPerson` doesn't change - and I got it right in the first place - everything is fine.
 
 But in the real world things do change and if the actual value returned doesn't match with what I have told TypeScript, I get no build error, but maybe a runtime error or odd behavior at some time.
 
@@ -85,7 +85,7 @@ function bar(fooresult: ReturnType<typeof foo>) {
 }
 ```
 
-How is this useful? Well, the problem i Take One was that we had to give the exact type that was returned by the API function. And we could get that wrong or it could change in the future.
+How is this useful? Well, the problem in Take One was that we had to give the exact type that was returned by the API function. And we could get that wrong or it could change in the future.
 
 So wouldn't i be nice if we could use `RetunrType` instead? Something like this:
 
@@ -95,13 +95,13 @@ const personDto: ReturnType<typeof api.getPerson> = yield call(api.getPerson);
 
 Unfortunately we can't do it like that. We need a bit more TypeScript magic, but we will come to that in a minute.
 
-I'm still manually specifying the type, so why is this better? Well, it is easy to see if have got it right in the first place, because the generic parameter shall match the name of the function I'm calling. And what will happen if the type returned by `api.getPerson` changes, for instance if the `age` property is renamed? Now I will get a build error.
+I'm still manually specifying the type, so why is this better? Well, it is easy to see if have got it right in the first place, because the generic parameter should match the name of the function I'm calling. And what will happen if the type returned by `api.getPerson` changes, for instance if the `age` property is renamed? Now I will get a build error.
 
 But I said that it didn't work, so what is missing.
 
 The problem is that I'm not really interested in the return type of `api.getPerson` because it is an `async` function that return a `Promise`. Actually a `Promise<T>` and it is the `T` that I want.
 
-Fortunately TypeScript has at lot of advanced type related functions, and we can write a little helper to do the trick.
+Fortunately TypeScript has at lot of advanced type related functions, and we can write a little helper to do the trick and extract the generic typeargument from the return type.
 
 ```typescript
 type R<T> = T extends Promise<infer U> ? U : T;

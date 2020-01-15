@@ -29,7 +29,7 @@ module.exports = {
                     node.init.argument.arguments[0].type === "MemberExpression"
                   ) {
                     const argumentSource = sourceCode.getText(node.init.argument.arguments[0]);
-                    const expected = `YieldReturn<typeof ${argumentSource}`;
+                    const expected = `YieldReturn<typeof ${argumentSource}>`;
                     if (node.id.typeAnnotation === undefined) {
                       context.report({
                         node,

@@ -63,7 +63,7 @@ But in the real world things do change and if the actual value returned doesn't 
 
 This is better than the original code, but not benefitting from TypeScripts potential.
 
-# A much better solution - Take Two
+## A much better solution - Take Two
 
 Do you know `ReturnType<T>` in TypeScript? If you have a function, you can define a type that matches the type that is returned by the function, but you don't have to know exactly which type that is.
 

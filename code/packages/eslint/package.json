@@ -1,5 +1,5 @@
 {
-  "name": "eslint-redux-saga-typescript",
+  "name": "eslint-plugin-redux-saga-typescript",
   "version": "1.0.0",
   "description": "Redux Saga rule for typesafe API calls in sagas.",
   "main": "src/index.js",

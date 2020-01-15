@@ -14,9 +14,9 @@ module.exports = {
   create: context => {
     let methods = ["call"];
     if (context.options.length >= 1){
-      methods = context.options[0;]
+      methods = context.options[0];
     }
-    console.log("eslint-yield-return-type methods: ", methods);
+    console.log("eslint-plugin-yield-return-type methods: ", methods);
     return {};
   }
 }

@@ -46,7 +46,7 @@
     "@typescript-eslint/eslint-plugin": "^2.16.0",
     "@typescript-eslint/parser": "^2.16.0",
     "@typescript-eslint/typescript-estree": "^2.16.0",
-    "eslint-redux-saga-typescript": "file:packages/eslint",
+    "eslint-plugin-redux-saga-typescript": "file:packages/eslint",
     "redux-devtools-extension": "^2.13.8"
   }
 }

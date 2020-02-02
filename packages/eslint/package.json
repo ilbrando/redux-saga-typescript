@@ -4,5 +4,8 @@
   "description": "Redux Saga rule for typesafe API calls in sagas.",
   "main": "src/index.js",
   "author": "ilbrando",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^3.7.5"
+  }
 }

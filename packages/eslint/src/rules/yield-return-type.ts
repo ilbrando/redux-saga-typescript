@@ -1,4 +1,10 @@
-module.exports = {
+import { TSESLint } from "@typescript-eslint/experimental-utils";
+
+type MessageIds = "missing" | "incorrect";
+
+type Options = [string[]];
+
+const yieldReturnType: TSESLint.RuleModule<MessageIds, Options> = {
   meta: {
     type: "problem",
     fixable: "code",
@@ -9,20 +15,32 @@ module.exports = {
           type: "string"
         }
       }
-    ]
+    ],
+    docs: { description: "", category: "Best Practices", recommended: "error", url: "" },
+    messages: {
+      missing: `TypeAnnotation is missing and should be '{{expected}}'.`,
+      incorrect: `TypeAnnotation should be '{{expected}}'.`
+    }
   },
   create: context => {
-    let methods = ["call"];
-    if (context.options.length >= 1) {
-      methods = context.options[0];
-    }
+    const methods = context.options.length >= 1 ? context.options[0] : ["call"];
     const sourceCode = context.getSourceCode();
     return {
       VariableDeclarator: node => {
         if (node.init && node.init.type === "YieldExpression") {
-          if (node.init.argument.type === "CallExpression") {
+          if (node.init.argument && node.init.argument.type === "CallExpression") {
             if (node.init.argument.callee.type === "Identifier") {
-              if (methods.some(x => x === node.init.argument.callee.name)) {
+              if (
+                methods.some(
+                  method =>
+                    node.init &&
+                    node.init.type === "YieldExpression" &&
+                    node.init.argument &&
+                    node.init.argument.type === "CallExpression" &&
+                    node.init.argument.callee.type === "Identifier" &&
+                    method === node.init.argument.callee.name
+                )
+              ) {
                 if (node.init.argument.arguments.length > 0) {
                   if (
                     node.init.argument.arguments[0].type === "Identifier" ||
@@ -33,14 +51,16 @@ module.exports = {
                     if (node.id.typeAnnotation === undefined) {
                       context.report({
                         node,
-                        message: `TypeAnnotation is missing and should be '${expected}'.`
+                        messageId: "missing",
+                        data: { expected }
                       });
                       return;
                     }
                     if (node.id.typeAnnotation.type !== "TSTypeAnnotation") {
                       context.report({
                         node,
-                        message: `TypeAnnotation is missing and should be '${expected}'.`
+                        messageId: "missing",
+                        data: { expected }
                       });
                       return;
                     }
@@ -48,28 +68,35 @@ module.exports = {
                     if (typeAnnotation.type !== "TSTypeReference") {
                       context.report({
                         node: typeAnnotation,
-                        message: `TypeAnnotation should be '${expected}'.`
+                        messageId: "incorrect",
+                        data: { expected }
                       });
                       return;
                     }
-                    if (typeAnnotation.typeName.name !== "YieldReturn") {
+                    // TODO name key does not exist?
+                    // if (typeAnnotation.typeName.name !== "YieldReturn") {
+                    //   context.report({
+                    //     node: typeAnnotation,
+                    //     messageId: "incorrect",
+                    //  data: {
+                    //   expected;
+                    // }
+                    //   });
+                    //   return;
+                    // }
+                    if (typeAnnotation.typeParameters?.type !== "TSTypeParameterInstantiation") {
                       context.report({
                         node: typeAnnotation,
-                        message: `TypeAnnotation should be '${expected}'.`
-                      });
-                      return;
-                    }
-                    if (typeAnnotation.typeParameters.type !== "TSTypeParameterInstantiation") {
-                      context.report({
-                        node: typeAnnotation,
-                        message: `TypeAnnotation should be '${expected}'.`
+                        messageId: "incorrect",
+                        data: { expected }
                       });
                       return;
                     }
                     if (typeAnnotation.typeParameters.params[0].type !== "TSTypeQuery") {
                       context.report({
                         node: typeAnnotation,
-                        message: `TypeAnnotation should be '${expected}'.`
+                        messageId: "incorrect",
+                        data: { expected }
                       });
                       return;
                     }
@@ -77,7 +104,8 @@ module.exports = {
                     if (yieldreturnSource !== argumentSource) {
                       context.report({
                         node: typeAnnotation,
-                        message: `TypeAnnotation should be '${expected}'.`
+                        messageId: "incorrect",
+                        data: { expected }
                       });
                       return;
                     }
@@ -91,3 +119,5 @@ module.exports = {
     };
   }
 };
+
+module.exports = yieldReturnType;

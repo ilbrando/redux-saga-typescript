@@ -30,17 +30,8 @@ const yieldReturnType: TSESLint.RuleModule<MessageIds, Options> = {
         if (node.init && node.init.type === "YieldExpression") {
           if (node.init.argument && node.init.argument.type === "CallExpression") {
             if (node.init.argument.callee.type === "Identifier") {
-              if (
-                methods.some(
-                  method =>
-                    node.init &&
-                    node.init.type === "YieldExpression" &&
-                    node.init.argument &&
-                    node.init.argument.type === "CallExpression" &&
-                    node.init.argument.callee.type === "Identifier" &&
-                    method === node.init.argument.callee.name
-                )
-              ) {
+              const methodName = node.init.argument.callee.name;
+              if (methods.some(method => method === methodName)) {
                 if (node.init.argument.arguments.length > 0) {
                   if (
                     node.init.argument.arguments[0].type === "Identifier" ||

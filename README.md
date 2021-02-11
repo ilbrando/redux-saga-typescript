@@ -1,3 +1,7 @@
+>**After I wrote this, I discovered (typed-redux-saga)[https://github.com/agiledigital/typed-redux-saga] which uses some even 
+more clever TypeScript tricks and accomplishes exactly what I was looking for. I have been using this for some time now, and it works
+like a charm. Kudos to @agiledigital.**
+
 # Typesafe API calls from a Redux Saga generator function
 
 Using TypeScript with [Redux Saga](https://redux-saga.js.org/) is a big pain, because it is not possible to have typesafe generator functions. Even though version 3.6 adds some improvements, the [problem with sagas is not solved](https://github.com/microsoft/TypeScript/issues/2983#issuecomment-230414026).

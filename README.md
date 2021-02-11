@@ -1,4 +1,4 @@
->**After I wrote this, I discovered (typed-redux-saga)[https://github.com/agiledigital/typed-redux-saga] which uses some even 
+>**After I wrote this, I discovered [typed-redux-saga](https://github.com/agiledigital/typed-redux-saga) which uses some even 
 more clever TypeScript tricks and accomplishes exactly what I was looking for. I have been using this for some time now, and it works
 like a charm. Kudos to @agiledigital.**
 
